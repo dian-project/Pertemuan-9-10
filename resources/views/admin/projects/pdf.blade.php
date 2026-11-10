@@ -3,94 +3,152 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <title>Laporan Data Project</title>
+    <title>Data Projects</title>
 
     <style>
+        @page {
+        size: A4 landscape;
+        margin: 25px 30px;
+        }
+
         body {
             font-family: DejaVu Sans, sans-serif;
-            font-size: 10px;
-            color: #222;
+            font-size: 11px;
+            color: #000;
         }
 
         h1 {
-            text-align: center;
-            font-size: 20px;
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #555;
+            font-size: 24px;
+            margin: 0 0 25px 0;
+            font-weight: bold;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            table-layout: fixed;
         }
 
         th, td {
-            border: 1px solid #999;
-            padding: 8px;
-            text-align: left;
-            vertical-align: top;
+            border: 1px solid #777;
+            padding: 10px 8px;
+            vertical-align: middle;
         }
 
         th {
-            background: #ffc400;
-            color: #222;
-        }
-
-        .number {
             text-align: center;
-            width: 30px;
+            font-size: 12px;
+            font-weight: bold;
         }
 
-        .footer {
-            margin-top: 20px;
-            text-align: right;
-            font-size: 9px;
+        td {
+            font-size: 11px;
+        }
+
+        .no {
+            width: 5%;
+            text-align: center;
+        }
+
+        .gambar {
+            width: 14%;
+            text-align: center;
+        }
+
+        .title {
+            width: 11%;
+        }
+
+        .teknologi {
+            width: 12%;
+        }
+
+        .description {
+            width: 48%;
+            text-align: left;
+        }
+
+        .status {
+            width: 10%;
+            text-align: center;
+        }
+
+        .project-image {
+            width: 110px;
+            height: 65px;
+            object-fit: contain;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 20px;
         }
     </style>
 </head>
 <body>
 
-    <h1>LAPORAN DATA PROJECT</h1>
-    <div class="subtitle">Dian Project — Portofolio Digital</div>
+    <h1>Data Projects</h1>
 
     <table>
         <thead>
             <tr>
-                <th class="number">No.</th>
-                <th>Nama Project</th>
-                <th>Kategori / Teknologi</th>
-                <th>Deskripsi</th>
-                <th>Link Project</th>
+                <th class="no">No</th>
+                <th class="gambar">Gambar</th>
+                <th class="title">Title</th>
+                <th class="kategori">Kategori</th>
+                <th class="description">Description</th>
+                <th class="status">Status</th>
             </tr>
         </thead>
 
         <tbody>
             @forelse ($projects as $index => $project)
                 <tr>
-                    <td class="number">{{ $index + 1 }}</td>
-                    <td>{{ $project->nama }}</td>
-                    <td>{{ $project->kategori }}</td>
-                    <td>{{ $project->deskripsi }}</td>
-                    <td>{{ $project->link ?: '-' }}</td>
+                    <td class="no">{{ $index + 1 }}</td>
+
+                    <td class="gambar">
+                        @php
+                            $pathGambar = public_path(
+                                'images/projects/' . $project->gambar
+                            );
+                        @endphp
+
+                        @if ($project->gambar && file_exists($pathGambar))
+                            <img
+                                src="{{ $pathGambar }}"
+                                class="project-image"
+                                alt="Gambar Project"
+                            >
+                        @else
+                            -
+                        @endif
+                    </td>
+
+                    <td class="title">
+                        {{ $project->nama }}
+                    </td>
+
+                    <td class="kategori">
+                        {{ $project->kategori }}
+                    </td>
+
+                    <td class="description">
+                        {{ $project->deskripsi }}
+                    </td>
+
+                    <td class="status">
+                        {{ $project->status ?? '-' }}
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5" style="text-align:center">
+                    <td colspan="6" class="empty">
                         Belum ada data project.
                     </td>
                 </tr>
             @endforelse
         </tbody>
     </table>
-
-    <div class="footer">
-        Total project: {{ $projects->count() }}
-    </div>
 
 </body>
 </html>

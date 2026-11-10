@@ -27,7 +27,7 @@ class ProjectController extends Controller
     $projects = \App\Models\Project::orderBy('id', 'asc')->get();
 
     $pdf = Pdf::loadView('admin.projects.pdf', compact('projects'))
-        ->setPaper('a4', 'landscape');
+    ->setPaper('a4', 'landscape');
 
     return $pdf->download('data-project-dian-project.pdf');
     }

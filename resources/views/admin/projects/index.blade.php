@@ -32,6 +32,25 @@
         color: #fff;
     }
 
+    .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-pdf-project {
+    background: #dc3545;
+    color: #fff;
+    padding: 11px 16px;
+    border-radius: 7px;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-pdf-project:hover {
+    background: #bb2d3b;
+    color: #fff;
+}
     .projects-card {
         background: #fff;
         border-radius: 12px;
@@ -186,9 +205,17 @@
 <div class="projects-header">
     <h2>Data Projects</h2>
 
-    <a href="{{ route('admin.projects.create') }}" class="btn-add-project">
-        Tambah Project
-    </a>
+    <div class="header-actions">
+        <a href="{{ route('admin.projects.create') }}" class="btn-add-project">
+            Tambah Project
+        </a>
+
+        <a href="{{ route('admin.projects.pdf') }}"
+           class="btn-pdf-project"
+           target="_blank">
+            Cetak PDF
+        </a>
+    </div>
 </div>
 
 @if(session('success'))
